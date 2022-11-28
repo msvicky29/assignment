@@ -1,0 +1,96 @@
+#include<stdio.h>
+#include<conio.h>
+#include<alloc.h>
+struct node
+{
+int data;
+struct node *next;
+}*top,*new1,*first;
+void main()
+{
+int wish,opt;
+void create(),push(),pop(),view();
+do
+{
+clrscr();
+printf("Stack using linked list menu");
+printf("\n1.Create\n2.Push\n3.Pop\n4.View\n5.Exit\n");
+printf("Emter the option");
+scanf("%d",&wish);
+switch(wish)
+{
+ case 1:
+  create();
+  break;
+ case 2:
+  push();
+  break;
+ case 3:
+  pop();
+  break;
+ case 4:
+  view();
+  break;
+ case 5:
+  exit(0);
+ }
+ printf("\nDo you want to continue");
+ scanf("%d",&opt);
+}while(opt==1);
+}
+void create()
+{
+ int ch;
+ top=(struct node*)malloc(sizeof(struct node));
+ top->next=NULL;
+ do
+ { clrscr();
+  printf("Enter the data");
+ scanf("%d",&top->data);
+ printf("Do you want to continue");
+ scanf("%d",&ch);
+ if(ch==1)
+ {
+  new1=(struct node*)malloc(sizeof(struct node));
+  new1->next=top;
+  top=new1;
+  first=top;
+  }
+  else
+  break;
+  }while(ch==1);
+}
+void push()
+{
+top=first;
+new1=(struct node*)malloc(sizeof(struct node));
+printf("Enter the data to push");
+scanf("%d",&new1->data);
+new1->next=top;
+top=new1;
+first=top;
+}
+void pop()
+{
+ clrscr();
+ top=first;
+ if(top=NULL)
+  printf("\nStack is NULL");
+ else
+ {
+  printf("\nThe %d element was popped",top->data);
+  top=top->next;
+  first=top;
+ }
+}
+void view()
+{
+printf("\nStack Content\n");
+while(top->next!=NULL)
+{
+ printf("%d\n",top->data);
+ top=top->next;
+}
+printf("%d\n",top->data);
+getch();
+}

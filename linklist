@@ -1,0 +1,159 @@
+#include<stdio.h>
+#include<conio.h>
+#include<malloc.h>
+#include<string.h>
+#define null 0
+struct element_list
+{
+ int info;
+ struct element_list *next;
+};
+typedef struct element_list node;
+node *create(node*);
+node *insert(node*);
+node *delet(node*);
+void display(node*);
+void main()
+{
+ node *start;
+ int key,choice,newinfo,delinfo,position,quit;
+ char c;
+ clrscr();
+ start=NULL;
+ quit=0;
+ do
+ {
+  printf("program for singly linked list\n\n");
+  printf("\noption\t\tchoices");
+  printf("\n c \t\t\tCreate");
+  printf("\n i \t\t\tInsert");
+  printf("\n d \t\t\tDelete");
+  printf("\n q \t\t\tQuit");
+  do
+  c=getchar();
+  while(strchr("CcliDdQq",c)==NULL);
+  switch(c)
+  {
+   case 'c':
+   case 'C':
+    start=create(start);
+    printf("\nLINKED LIST");
+    display(start);
+    break;
+  case 'i':
+  case 'I':
+   start=insert(start);
+   printf("\nLInked LIST");
+   display(start);
+   break;
+ case 'd':
+ case 'D':
+  start=delet(start);
+  printf("\nLINKED LIST");
+  display(start);
+  break;
+ case 'q':
+ case 'Q':
+  quit=1;
+  }
+ }while(!quit);
+ printf("\n");
+ return;
+}
+node *create(node *start)
+{
+ node *temp,*prev;
+ int element;
+ prev=start=NULL;
+ printf("\nEnter the integer -99 to exit:");
+ scanf("%d",&element);
+ while(element!=-99)
+ {
+  temp=(node*)malloc(sizeof(node));
+  temp->info=element;
+  temp->next=NULL;
+  if(start=NULL)
+  start=temp;
+  else
+   prev->next=temp;
+   prev=temp;
+   printf("\nEnter the integer -99 to exit");
+   scanf("%d",&element);
+  }
+  return start;
+ }
+ void display(node *start)
+ {
+  printf("\nThe root-->");
+  while(start!=NULL)
+  {
+  printf("%d->",start->info);
+  start=start->next;
+  }
+  printf("NULL\n\n");
+ }
+ node *insert(node *start)
+ {
+  node *newnode,*temp;
+  int i,newinfo,position;
+  printf("enter the elements to be inserted :");
+  scanf("%d",&newinfo);
+  do
+  {
+   printf("\nEnter position of insert");
+   scanf("%d",&position);
+   }
+  while(position<1);
+  newnode=(node*)malloc(sizeof(node));
+  newnode->info=newinfo;
+  if((position==1)||(start==NULL))
+  {
+   newnode->next=start;
+   start=newnode;
+
+   }
+   else
+   {
+    temp=start;
+    i=2;
+    while((i<position)&&(temp->next!=NULL));
+    {
+     temp=temp->next;
+     ++i;
+    }
+    newnode->next=temp->next;
+    temp->next=newnode;
+    }
+    return start;
+   }
+   node *delet(node *start)
+   {
+    node *temp,*prev;
+    int i,delinfo;
+    printf("Enter the element to be deleted:");
+    scanf("%d",&delinfo);
+    if(start==NULL)
+    printf("\n Can't Delete--List empty");
+    else
+    prev=NULL;
+    temp=start;
+    while((temp!=NULL)&&(temp->info!=delinfo))
+    {
+    prev=temp;
+    temp=temp->next;
+    }
+    if(temp==NULL)
+    printf("Element not found\n");
+    else
+    {
+     if(prev==NULL)
+     start=start->next;
+     else
+     {
+     prev->next=temp->next;
+     free(temp);
+     printf("\nLINKED LIST\n");
+    }
+   }
+   return start;
+ }
